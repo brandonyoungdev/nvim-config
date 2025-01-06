@@ -5,7 +5,7 @@ local lspconfig = require "lspconfig"
 
 local servers = {
   "html",
-  "tsserver",
+  "ts_ls",
   "clangd",
   "phpactor",
   "astro",
