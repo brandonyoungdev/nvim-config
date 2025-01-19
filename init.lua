@@ -47,3 +47,6 @@ autocmd!
 au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=250})
 augroup END
 ]]
+
+vim.opt.spell = true
+vim.opt.spelllang = "en_us"
