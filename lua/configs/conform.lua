@@ -5,6 +5,7 @@ local options = {
     html = { "prettier" },
     go = { "gofmt", "goimports", "gci" },
     php = { "phpcbf" },
+    yaml = { "prettierd" },
   },
 
   format_on_save = {
