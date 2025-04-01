@@ -4,8 +4,9 @@ local options = {
     css = { "prettier" },
     html = { "prettier" },
     go = { "gofmt", "goimports", "gci" },
-    php = { "phpcbf" },
+    php = { "pint" },
     yaml = { "prettierd" },
+    blade = { "blade-formatter " },
   },
 
   format_on_save = {

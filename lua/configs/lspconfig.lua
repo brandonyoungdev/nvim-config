@@ -14,6 +14,8 @@ local servers = {
   "yamlls",
   "dockerls",
   "tailwindcss",
+  "intelephense",
+  "psalm",
 }
 
 local nvlsp = require "nvchad.configs.lspconfig"

@@ -50,3 +50,101 @@ augroup END
 
 vim.opt.spell = true
 vim.opt.spelllang = "en_us"
+
+vim.g.indent_blankline_enabled = false
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>tt",
+  ":lua require('neotest').run.run()<CR>",
+  { noremap = true, silent = true, desc = "Run nearest test" }
+)
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>tf",
+  ":lua require('neotest').run.run(vim.fn.expand('%'))<CR>",
+  { noremap = true, silent = true, desc = "Test current file" }
+)
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>tx",
+  ":lua require('neotest').run.stop()<CR>",
+  { noremap = true, silent = true, desc = "Stop current test" }
+)
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>tA",
+  ":lua require('neotest').run.attach()<CR>",
+  { noremap = true, silent = true, desc = "Attach to test" }
+)
+
+--Run full test suite
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>ta",
+  ":lua require('neotest').run.run(vim.fn.getcwd())<CR>",
+  { noremap = true, silent = true, desc = "Run all tests in suite" }
+)
+
+-- Run tests in directory
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>tD",
+  ":lua require('neotest').run.run(vim.fn.expand('%:p:h'))<CR>",
+  { noremap = true, silent = true, desc = "Run all tests in directory" }
+)
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>to",
+  ":lua require('neotest').output.open()<CR>",
+  { noremap = true, silent = true, desc = "Open test output" }
+)
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>tO",
+  ":lua require('neotest').output.open({ enter = true })<CR>",
+  { noremap = true, silent = true, desc = "Open test output and enter insert mode" }
+)
+
+-- open summary
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>ts",
+  ":lua require('neotest').summary.toggle()<CR>",
+  { noremap = true, silent = true, desc = "Toggle test summary" }
+)
+
+-- jump to failed test
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>tn",
+  ":lua require('neotest').jump.next({ status = 'failed' } )<CR>",
+  { silent = true, desc = "Jump to next failed test" }
+)
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>tp",
+  ":lua require('neotest').jump.prev({ status = 'failed' } )<CR>",
+  { silent = true, desc = "Jump to previous failed test" }
+)
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>tl",
+  ":lua require('neotest').output.toggle()<CR>",
+  { silent = true, desc = "Toggle test output panel" }
+)
+-- watch
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>tw",
+  ":lua require('neotest').watch.toggle()<CR>",
+  { silent = true, desc = "Toggle test watch panel" }
+)
