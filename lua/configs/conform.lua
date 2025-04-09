@@ -7,6 +7,9 @@ local options = {
     php = { "pint" },
     yaml = { "prettierd" },
     blade = { "blade-formatter " },
+    typescript = { "prettierd" },
+    typescriptreact = { "prettierd" },
+    tsx = { "prettierd" },
   },
 
   format_on_save = {
