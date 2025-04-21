@@ -201,28 +201,6 @@ return {
       }
     end,
   },
-  -- {
-  --   "mfussenegger/nvim-dap",
-  --   dependencies = {
-  --     "rcarriga/nvim-dap-ui",
-  --     "leoluz/nvim-dap-go",
-  --     "nvim-telescope/telescope-dap.nvim",
-  --     "nvim-neotest/nvim-nio",
-  --     "theHamsta/nvim-dap-virtual-text",
-  --   },
-  --   keys = {
-  --     { "<leader>db", "<cmd>DapToggleBreakpoint<cr>", desc = "Toggle Breakpoint" },
-  --     { "<leader>dc", "<cmd>DapContinue<cr>", desc = "Continue" },
-  --     { "<leader>di", "<cmd>DapStepInto<cr>", desc = "Step Into" },
-  --     { "<leader>do", "<cmd>DapStepOver<cr>", desc = "Step Over" },
-  --     { "<leader>dr", "<cmd>DapStepOut<cr>", desc = "Step Out" },
-  --     { "<leader>dt", "<cmd>DapTerminate<cr>", desc = "Terminate" },
-  --   },
-  --   config = function()
-  --     require("dapui").setup()
-  --     require("dap-go").setup()
-  --   end,
-  -- },
   -- DAP setup
   {
     "mfussenegger/nvim-dap",
@@ -474,17 +452,34 @@ return {
   },
   {
     "folke/noice.nvim",
+    dependencies = "MunifTanjim/nui.nvim",
     event = "VeryLazy",
     opts = {
-      -- add any options here
-    },
-    dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
+      lsp = {
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+        },
+        hover = {
+          silent = true,
+        },
+        signature = {
+          auto_open = {
+            enabled = false,
+          },
+        },
+      },
+      views = {
+        hover = {
+          scrollbar = false,
+        },
+        popupmenu = {
+          scrollbar = false,
+        },
+      },
+      presets = {
+        lsp_doc_border = true, -- add a border to hover docs and signature help
+      },
     },
   },
   {
