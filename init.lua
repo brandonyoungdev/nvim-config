@@ -177,3 +177,6 @@ vim.api.nvim_set_keymap(
   ":lua require('neotest').watch.toggle()<CR>",
   { silent = true, desc = "Toggle test watch panel" }
 )
+
+vim.fn.sign_define("DapBreakpoint", { text = "⬢", texthl = "Yellow", linehl = "", numhl = "Yellow" })
+vim.fn.sign_define("DapStopped", { text = "▶", texthl = "Green", linehl = "ColorColumn", numhl = "Green" })

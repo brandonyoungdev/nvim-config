@@ -156,15 +156,347 @@ return {
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
       "olimorris/neotest-phpunit",
+      { "fredrikaverpil/neotest-golang", version = "*" },
     },
     lazy = true,
     config = function()
+      local neotest_golang_opts = {} -- Specify custom configuration
       require("neotest").setup {
         adapters = {
           require "neotest-phpunit",
+          require "neotest-golang"(neotest_golang_opts), -- Registration
         },
       }
     end,
+  },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    ---@type Flash.Config
+    opts = {},
+    -- stylua: ignore
+    --
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
+  },
+  {
+    "RRethy/vim-illuminate",
+    event = "LspAttach",
+    config = function()
+      require("illuminate").configure { providers = { "lsp" } }
+    end,
+  },
+  {
+    "kylechui/nvim-surround",
+    version = "^3.0.0", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup {
+        -- Configuration here, or leave empty to use defaults
+      }
+    end,
+  },
+  -- {
+  --   "mfussenegger/nvim-dap",
+  --   dependencies = {
+  --     "rcarriga/nvim-dap-ui",
+  --     "leoluz/nvim-dap-go",
+  --     "nvim-telescope/telescope-dap.nvim",
+  --     "nvim-neotest/nvim-nio",
+  --     "theHamsta/nvim-dap-virtual-text",
+  --   },
+  --   keys = {
+  --     { "<leader>db", "<cmd>DapToggleBreakpoint<cr>", desc = "Toggle Breakpoint" },
+  --     { "<leader>dc", "<cmd>DapContinue<cr>", desc = "Continue" },
+  --     { "<leader>di", "<cmd>DapStepInto<cr>", desc = "Step Into" },
+  --     { "<leader>do", "<cmd>DapStepOver<cr>", desc = "Step Over" },
+  --     { "<leader>dr", "<cmd>DapStepOut<cr>", desc = "Step Out" },
+  --     { "<leader>dt", "<cmd>DapTerminate<cr>", desc = "Terminate" },
+  --   },
+  --   config = function()
+  --     require("dapui").setup()
+  --     require("dap-go").setup()
+  --   end,
+  -- },
+  -- DAP setup
+  {
+    "mfussenegger/nvim-dap",
+    event = "VeryLazy",
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "leoluz/nvim-dap-go",
+      "nvim-telescope/telescope-dap.nvim",
+      "nvim-neotest/nvim-nio",
+      "theHamsta/nvim-dap-virtual-text",
+    },
+    config = function()
+      require("dapui").setup()
+      require("dap-go").setup {
+        -- Additional dap configurations can be added.
+        -- dap_configurations accepts a list of tables where each entry
+        -- represents a dap configuration. For more details do:
+        -- :help dap-configuration
+        dap_configurations = {
+          {
+            -- Must be "go" or it will be ignored by the plugin
+            type = "go",
+            name = "Attach remote",
+            mode = "remote",
+            request = "attach",
+          },
+        },
+        -- delve configurations
+        delve = {
+          -- the path to the executable dlv which will be used for debugging.
+          -- by default, this is the "dlv" executable on your PATH.
+          path = "dlv",
+          -- time to wait for delve to initialize the debug session.
+          -- default to 20 seconds
+          initialize_timeout_sec = 20,
+          -- a string that defines the port to start delve debugger.
+          -- default to string "${port}" which instructs nvim-dap
+          -- to start the process in a random available port.
+          -- if you set a port in your debug configuration, its value will be
+          -- assigned dynamically.
+          port = "${port}",
+          -- additional args to pass to dlv
+          args = {},
+          -- the build flags that are passed to delve.
+          -- defaults to empty string, but can be used to provide flags
+          -- such as "-tags=unit" to make sure the test suite is
+          -- compiled during debugging, for example.
+          -- passing build flags using args is ineffective, as those are
+          -- ignored by delve in dap mode.
+          -- avaliable ui interactive function to prompt for arguments get_arguments
+          build_flags = {},
+          -- whether the dlv process to be created detached or not. there is
+          -- an issue on delve versions < 1.24.0 for Windows where this needs to be
+          -- set to false, otherwise the dlv server creation will fail.
+          -- avaliable ui interactive function to prompt for build flags: get_build_flags
+          detached = vim.fn.has "win32" == 0,
+          -- the current working directory to run dlv from, if other than
+          -- the current working directory.
+          cwd = nil,
+        },
+        -- options related to running closest test
+        tests = {
+          -- enables verbosity when running the test.
+          verbose = false,
+        },
+      }
+    end,
+    keys = {
+      {
+        "<leader>db",
+        function()
+          require("dap").toggle_breakpoint()
+        end,
+        desc = "toggle [d]ebug [b]reakpoint",
+      },
+      {
+        "<leader>dB",
+        function()
+          require("dap").set_breakpoint(vim.fn.input "Breakpoint condition: ")
+        end,
+        desc = "[d]ebug [B]reakpoint",
+      },
+      {
+        "<leader>dc",
+        function()
+          require("dap").continue()
+        end,
+        desc = "[d]ebug [c]ontinue (start here)",
+      },
+      {
+        "<leader>dC",
+        function()
+          require("dap").run_to_cursor()
+        end,
+        desc = "[d]ebug [C]ursor",
+      },
+      {
+        "<leader>dg",
+        function()
+          require("dap").goto_()
+        end,
+        desc = "[d]ebug [g]o to line",
+      },
+      {
+        "<leader>do",
+        function()
+          require("dap").step_over()
+        end,
+        desc = "[d]ebug step [o]ver",
+      },
+      {
+        "<leader>dO",
+        function()
+          require("dap").step_out()
+        end,
+        desc = "[d]ebug step [O]ut",
+      },
+      {
+        "<leader>di",
+        function()
+          require("dap").step_into()
+        end,
+        desc = "[d]ebug [i]nto",
+      },
+      {
+        "<leader>dj",
+        function()
+          require("dap").down()
+        end,
+        desc = "[d]ebug [j]ump down",
+      },
+      {
+        "<leader>dk",
+        function()
+          require("dap").up()
+        end,
+        desc = "[d]ebug [k]ump up",
+      },
+      {
+        "<leader>dl",
+        function()
+          require("dap").run_last()
+        end,
+        desc = "[d]ebug [l]ast",
+      },
+      {
+        "<leader>dp",
+        function()
+          require("dap").pause()
+        end,
+        desc = "[d]ebug [p]ause",
+      },
+      {
+        "<leader>dr",
+        function()
+          require("dap").repl.toggle()
+        end,
+        desc = "[d]ebug [r]epl",
+      },
+      {
+        "<leader>dR",
+        function()
+          require("dap").clear_breakpoints()
+        end,
+        desc = "[d]ebug [R]emove breakpoints",
+      },
+      {
+        "<leader>ds",
+        function()
+          require("dap").session()
+        end,
+        desc = "[d]ebug [s]ession",
+      },
+      {
+        "<leader>dt",
+        function()
+          require("dap").terminate()
+        end,
+        desc = "[d]ebug [t]erminate",
+      },
+      {
+        "<leader>dw",
+        function()
+          require("dap.ui.widgets").hover()
+        end,
+        desc = "[d]ebug [w]idgets",
+      },
+    },
+  },
+
+  -- DAP UI setup
+  {
+    "rcarriga/nvim-dap-ui",
+    event = "VeryLazy",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "mfussenegger/nvim-dap",
+    },
+    opts = {},
+    config = function(_, opts)
+      -- setup dap config by VsCode launch.json file
+      -- require("dap.ext.vscode").load_launchjs()
+      local dap = require "dap"
+      local dapui = require "dapui"
+      dapui.setup(opts)
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open {}
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close {}
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close {}
+      end
+    end,
+    keys = {
+      {
+        "<leader>du",
+        function()
+          require("dapui").toggle {}
+        end,
+        desc = "[d]ap [u]i",
+      },
+      {
+        "<leader>de",
+        function()
+          require("dapui").eval()
+        end,
+        desc = "[d]ap [e]val",
+      },
+    },
+  },
+  {
+    "theHamsta/nvim-dap-virtual-text",
+    opts = {},
+  },
+  {
+    "mistweaverco/kulala.nvim",
+    keys = {
+      { "<leader>Rs", desc = "Send request" },
+      { "<leader>Ra", desc = "Send all requests" },
+      { "<leader>Rb", desc = "Open scratchpad" },
+    },
+    ft = { "http", "rest" },
+    opts = {
+      -- your configuration comes here
+      global_keymaps = false,
+    },
+  },
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- add any options here
+    },
+    dependencies = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+    },
+  },
+  {
+    "rcarriga/nvim-notify",
+    opts = {
+      background_colour = "#000000",
+      timeout = 3000,
+      stages = "fade",
+      max_width = 250,
+      max_height = 10,
+      render = "compact",
+    },
   },
   {
     "jay-babu/mason-null-ls.nvim",
