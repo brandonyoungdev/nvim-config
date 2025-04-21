@@ -99,7 +99,40 @@ return {
   },
   {
     "folke/trouble.nvim",
-    cmd = "TroubleToggle",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = "Trouble",
+    keys = {
+      {
+        "<leader>xx",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xX",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xs",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        desc = "Symbols (Trouble)",
+      },
+      {
+        "<leader>xl",
+        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = "LSP Definitions / references / ... (Trouble)",
+      },
+      {
+        "<leader>xL",
+        "<cmd>Trouble loclist toggle<cr>",
+        desc = "Location List (Trouble)",
+      },
+      {
+        "<leader>xQ",
+        "<cmd>Trouble qflist toggle<cr>",
+        desc = "Quickfix List (Trouble)",
+      },
+    },
   },
   {
     "folke/twilight.nvim",
@@ -547,6 +580,68 @@ return {
         { name = "copilot", group_index = 2 },
         { name = "tailwind", group_index = 3 },
         { name = "nvim_lua", group_index = 3 },
+      },
+    },
+  },
+  {
+    "lewis6991/gitsigns.nvim",
+    event = "BufReadPre",
+    keys = {
+      {
+        "<leader>gh",
+        function()
+          require("gitsigns").preview_hunk()
+        end,
+        desc = "Git [h]unk preview",
+      },
+      {
+        "<leader>gb",
+        function()
+          require("gitsigns").blame_line { full = false }
+        end,
+        desc = "Git [b]lame line",
+      },
+      {
+        "<leader>gB",
+        function()
+          require("gitsigns").blame_line { full = true }
+        end,
+        desc = "Git [B]lame line (full)",
+      },
+      {
+        "<leader>gd",
+        function()
+          require("gitsigns").diffthis()
+        end,
+        desc = "Git [d]iff this",
+      },
+      {
+        "<leader>ga",
+        function()
+          require("gitsigns").stage_hunk()
+        end,
+        desc = "Git [a]dd hunk",
+      },
+      {
+        "<leader>gA",
+        function()
+          require("gitsigns").stage_buffer()
+        end,
+        desc = "Git [A]dd buffer",
+      },
+      {
+        "<leader>gr",
+        function()
+          require("gitsigns").reset_hunk()
+        end,
+        desc = "Git [r]eset hunk",
+      },
+      {
+        "<leader>gR",
+        function()
+          require("gitsigns").reset_buffer()
+        end,
+        desc = "Git [R]eset buffer",
       },
     },
   },
