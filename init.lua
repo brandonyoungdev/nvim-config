@@ -181,5 +181,19 @@ vim.api.nvim_set_keymap(
 vim.fn.sign_define("DapBreakpoint", { text = "⬢", texthl = "Yellow", linehl = "", numhl = "Yellow" })
 vim.fn.sign_define("DapStopped", { text = "▶", texthl = "Green", linehl = "ColorColumn", numhl = "Green" })
 
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>i",
+  "<cmd>lua vim.diagnostic.open_float()<CR>",
+  { noremap = false, silent = true, desc = "Open diagnostic float" }
+)
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>I",
+  [[<cmd>lua (function() vim.diagnostic.open_float(); vim.diagnostic.open_float() end)()<CR>]],
+  { noremap = false, silent = true, desc = "Open diagnostic float" }
+)
+
 -- set relative line numbers
 vim.o.relativenumber = true

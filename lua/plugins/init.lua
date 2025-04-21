@@ -606,7 +606,7 @@ return {
         function()
           require("gitsigns").blame_line { full = true }
         end,
-        desc = "Git [B]lame line (full)",
+        desc = "Git [B]lame full line",
       },
       {
         "<leader>gd",
