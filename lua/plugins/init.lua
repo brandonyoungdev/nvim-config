@@ -575,6 +575,7 @@ return {
       sources = {
         { name = "nvim_lsp", group_index = 1 },
         { name = "luasnip", group_index = 4 },
+        { name = "render-markdown", group_index = 2 },
         { name = "buffer", group_index = 3 },
         { name = "path", group_index = 3 },
         { name = "copilot", group_index = 2 },
@@ -644,5 +645,29 @@ return {
         desc = "Git [R]eset buffer",
       },
     },
+  },
+  {
+    "j-hui/fidget.nvim",
+    opts = {
+      -- options
+    },
+  },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    -- dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" }, -- if you prefer nvim-web-devicons
+    -- -@module 'render-markdown'
+    ---@type render.md.UserConfig
+    ---
+    ft = { "markdown", "quarto" },
+    -- opts = { enabled = true },
+    cmd = { "RenderMarkdown" },
+
+    config = function()
+      require("render-markdown").setup {
+        enabled = true,
+      }
+    end,
   },
 }
