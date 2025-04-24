@@ -589,25 +589,25 @@ return {
     event = "BufReadPre",
     keys = {
       {
-        "<leader>gh",
+        "<leader>ghp",
         function()
           require("gitsigns").preview_hunk()
         end,
         desc = "Git [h]unk preview",
       },
       {
-        "<leader>gb",
+        "<leader>gf",
         function()
           require("gitsigns").blame_line { full = false }
         end,
-        desc = "Git [b]lame line",
+        desc = "Git [f]orgive line",
       },
       {
-        "<leader>gB",
+        "<leader>gF",
         function()
           require("gitsigns").blame_line { full = true }
         end,
-        desc = "Git [B]lame full line",
+        desc = "Git [F]orgive full line",
       },
       {
         "<leader>gd",
@@ -617,32 +617,32 @@ return {
         desc = "Git [d]iff this",
       },
       {
-        "<leader>ga",
+        "<leader>gha",
         function()
           require("gitsigns").stage_hunk()
         end,
         desc = "Git [a]dd hunk",
       },
       {
-        "<leader>gA",
+        "<leader>gba",
         function()
           require("gitsigns").stage_buffer()
         end,
-        desc = "Git [A]dd buffer",
+        desc = "Git [a]dd buffer",
       },
       {
-        "<leader>gr",
+        "<leader>ghr",
         function()
           require("gitsigns").reset_hunk()
         end,
         desc = "Git [r]eset hunk",
       },
       {
-        "<leader>gR",
+        "<CTRL>gbr",
         function()
           require("gitsigns").reset_buffer()
         end,
-        desc = "Git [R]eset buffer",
+        desc = "Git [r]eset buffer",
       },
     },
   },
