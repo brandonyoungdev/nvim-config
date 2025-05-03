@@ -518,7 +518,7 @@ return {
   {
     "rcarriga/nvim-notify",
     opts = {
-      background_colour = "#000000",
+      background_colour = "#00B4FF",
       timeout = 3000,
       stages = "fade",
       max_width = 250,
