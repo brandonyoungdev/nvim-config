@@ -33,6 +33,7 @@ return {
         "vue",
         "dockerfile",
         "php",
+        "astro",
       },
     },
   },
