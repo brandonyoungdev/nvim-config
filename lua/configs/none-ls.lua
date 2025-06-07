@@ -31,6 +31,7 @@ local options = {
     "cspell",
     "yaml-language-server",
     "codespell",
+    "nilaway",
   },
   -- Enable or disable null-ls methods to get set up
   -- This setting is useful if some functionality is handled by other plugins such as `conform` and `nvim-lint`
