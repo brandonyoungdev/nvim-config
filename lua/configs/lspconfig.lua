@@ -18,6 +18,7 @@ local servers = {
   "psalm",
   "rust_analyzer",
   "vhdl_ls",
+  "bacon_ls",
 }
 
 local nvlsp = require "nvchad.configs.lspconfig"
