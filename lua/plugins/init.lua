@@ -544,6 +544,9 @@ return {
     "hrsh7th/nvim-cmp",
     dependencies = {
       {
+        "hrsh7th/cmp-nvim-lsp-signature-help",
+      },
+      {
         "zbirenbaum/copilot-cmp",
         config = function()
           require("copilot_cmp").setup()
@@ -578,6 +581,7 @@ return {
       sources = {
         { name = "nvim_lsp", group_index = 1 },
         { name = "luasnip", group_index = 4 },
+        { name = "nvim_lsp_signature_help", group_index = 1 },
         { name = "render-markdown", group_index = 2 },
         { name = "buffer", group_index = 3 },
         { name = "path", group_index = 3 },

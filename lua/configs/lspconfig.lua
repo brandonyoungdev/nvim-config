@@ -16,6 +16,8 @@ local servers = {
   "tailwindcss",
   "intelephense",
   "psalm",
+  "rust_analyzer",
+  "vhdl_ls",
 }
 
 local nvlsp = require "nvchad.configs.lspconfig"
