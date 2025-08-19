@@ -19,7 +19,6 @@ local servers = {
   "rust_analyzer",
   "vhdl_ls",
   "bacon_ls",
-  "tilt",
 }
 
 local nvlsp = require "nvchad.configs.lspconfig"
