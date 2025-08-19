@@ -34,6 +34,7 @@ return {
         "dockerfile",
         "php",
         "astro",
+        "starlark",
       },
     },
   },
