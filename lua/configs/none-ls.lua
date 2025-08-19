@@ -35,7 +35,7 @@ local options = {
     "rust_analyzer",
     "vhdl_ls",
     "bacon_ls",
-    "tilt",
+    "tilt_ls",
   },
   -- Enable or disable null-ls methods to get set up
   -- This setting is useful if some functionality is handled by other plugins such as `conform` and `nvim-lint`

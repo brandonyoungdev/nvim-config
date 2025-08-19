@@ -19,6 +19,7 @@ local servers = {
   "rust_analyzer",
   "vhdl_ls",
   "bacon_ls",
+  "tilt_ls",
 }
 
 local nvlsp = require "nvchad.configs.lspconfig"
@@ -38,3 +39,9 @@ end
 --   on_init = nvlsp.on_init,
 --   capabilities = nvlsp.capabilities,
 -- }
+--
+
+lspconfig.tilt_ls.setup {
+  filetypes = { "tiltfile" },
+  root_dir = lspconfig.util.root_pattern("Tiltfile", ".git"),
+}
