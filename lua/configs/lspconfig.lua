@@ -40,6 +40,22 @@ end
 --   capabilities = nvlsp.capabilities,
 -- }
 --
+--
+local util = require "lspconfig.util"
+
+lspconfig.astro.setup {
+  -- keep normal project root detection (apps/site)
+  root_dir = util.root_pattern("astro.config.mjs", "package.json"),
+
+  on_new_config = function(config, root_dir)
+    local git_root = util.find_git_ancestor(root_dir) or root_dir
+    local tsdk = util.path.join(git_root, "node_modules", "typescript", "lib")
+
+    config.init_options = config.init_options or {}
+    config.init_options.typescript = config.init_options.typescript or {}
+    config.init_options.typescript.tsdk = tsdk
+  end,
+}
 
 lspconfig.tilt_ls.setup {
   filetypes = { "tiltfile" },
