@@ -1,15 +1,15 @@
 local options = {
   formatters_by_ft = {
     lua = { "stylua" },
-    css = { "prettier" },
+    css = { "biome" },
     html = { "prettier" },
     go = { "gofmt", "goimports", "gci" },
     php = { "pint" },
     yaml = { "prettierd" },
     blade = { "blade-formatter " },
-    typescript = { "prettierd" },
-    typescriptreact = { "prettierd" },
-    tsx = { "prettierd" },
+    typescript = { "biome" },
+    typescriptreact = { "biome" },
+    tsx = { "biome" },
   },
 
   format_on_save = {
