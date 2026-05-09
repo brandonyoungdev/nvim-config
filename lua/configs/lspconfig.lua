@@ -1,14 +1,18 @@
--- load defaults i.e lua_lsp
 require("nvchad.configs.lspconfig").defaults()
 
-local lspconfig = require "lspconfig"
+local nvlsp = require "nvchad.configs.lspconfig"
 
-local servers = {
+vim.lsp.config("*", {
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
+})
+
+vim.lsp.enable {
   "html",
   "ts_ls",
   "clangd",
   "phpactor",
-  "astro",
   "gopls",
   "pyright",
   "yamlls",
@@ -19,45 +23,31 @@ local servers = {
   "rust_analyzer",
   "vhdl_ls",
   "bacon_ls",
-  "tilt_ls",
 }
 
-local nvlsp = require "nvchad.configs.lspconfig"
-
--- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = nvlsp.on_attach,
-    on_init = nvlsp.on_init,
-    capabilities = nvlsp.capabilities,
-  }
-end
-
--- -- configuring single server, example: typescript
--- lspconfig.tsserver.setup {
---   on_attach = nvlsp.on_attach,
---   on_init = nvlsp.on_init,
---   capabilities = nvlsp.capabilities,
--- }
---
---
-local util = require "lspconfig.util"
-
-lspconfig.astro.setup {
-  -- keep normal project root detection (apps/site)
-  root_dir = util.root_pattern("astro.config.mjs", "package.json"),
-
-  on_new_config = function(config, root_dir)
-    local git_root = util.find_git_ancestor(root_dir) or root_dir
-    local tsdk = util.path.join(git_root, "node_modules", "typescript", "lib")
-
-    config.init_options = config.init_options or {}
-    config.init_options.typescript = config.init_options.typescript or {}
-    config.init_options.typescript.tsdk = tsdk
+-- astro: locate typescript SDK relative to the git root of the workspace
+vim.lsp.config("astro", {
+  root_markers = { "astro.config.mjs", "package.json" },
+  before_init = function(params, config)
+    local root = (params.workspaceFolders or {})[1]
+    root = root and vim.uri_to_fname(root.uri) or vim.fn.getcwd()
+    local path = root
+    while path ~= "/" do
+      if vim.uv.fs_stat(path .. "/.git") then
+        root = path
+        break
+      end
+      path = vim.fn.fnamemodify(path, ":h")
+    end
+    config.init_options = vim.tbl_deep_extend("force", config.init_options or {}, {
+      typescript = { tsdk = root .. "/node_modules/typescript/lib" },
+    })
   end,
-}
+})
+vim.lsp.enable "astro"
 
-lspconfig.tilt_ls.setup {
+vim.lsp.config("tilt_ls", {
   filetypes = { "tiltfile" },
-  root_dir = lspconfig.util.root_pattern("Tiltfile", ".git"),
-}
+  root_markers = { "Tiltfile", ".git" },
+})
+vim.lsp.enable "tilt_ls"
