@@ -181,15 +181,15 @@ return {
       require("nvim-ts-autotag").setup()
     end,
   },
-  {
-    "zbirenbaum/copilot.lua",
-    event = "InsertEnter",
-    opts = require "configs.copilot",
-    cmd = "Copilot",
-    config = function()
-      require("copilot").setup()
-    end,
-  },
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   event = "InsertEnter",
+  --   opts = require "configs.copilot",
+  --   cmd = "Copilot",
+  --   config = function()
+  --     require("copilot").setup()
+  --   end,
+  -- },
   {
     "nvim-neotest/neotest",
     dependencies = {
@@ -547,12 +547,12 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
-      {
-        "zbirenbaum/copilot-cmp",
-        config = function()
-          require("copilot_cmp").setup()
-        end,
-      },
+      -- {
+      --   "zbirenbaum/copilot-cmp",
+      --   config = function()
+      --     require("copilot_cmp").setup()
+      --   end,
+      -- },
       {
         "roobert/tailwindcss-colorizer-cmp.nvim",
         -- optionally, override the default options:
@@ -585,7 +585,7 @@ return {
         { name = "render-markdown", group_index = 2 },
         { name = "buffer", group_index = 3 },
         { name = "path", group_index = 3 },
-        { name = "copilot", group_index = 2 },
+        -- { name = "copilot", group_index = 2 },
         { name = "tailwind", group_index = 3 },
         { name = "nvim_lua", group_index = 3 },
       },
